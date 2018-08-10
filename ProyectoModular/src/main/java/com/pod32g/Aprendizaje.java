@@ -12,36 +12,33 @@ public class Aprendizaje implements Resultado {
 
     private List<Integer[]> respuestas = new LinkedList<Integer[]>();
 
-    private int visual = 0;
-    private int auditivo = 0;
-    private int kinestesico = 0;
-
     public int analizarRespuestas(List<Integer> respuestas) {
         return respuestas.indexOf(Collections.max(respuestas));
     }
 
     public List<Integer> sumarRespuestas(List<Integer[]> respuestas) {
+        int visual = 0, auditivo = 0, kinestesico = 0;
         List<Integer> sumas = new LinkedList<Integer>();
 
         //Visual
         for(int i = 0; i < respuestas.get(0).length; i++) {
-            this.visual += respuestas.get(0)[i];
+            visual += respuestas.get(0)[i];
         }
 
         //Auditivo
         for(int i = 0; i < respuestas.get(1).length; i++) {
-            this.auditivo += respuestas.get(1)[i];
+            auditivo += respuestas.get(1)[i];
         }
 
         //Kinestesico
         for (int i = 0; i < respuestas.get(2).length; i++) {
-            this.kinestesico += respuestas.get(2)[i];
+            kinestesico += respuestas.get(2)[i];
         }
 
         //Agregar las sumas a la lista
-        sumas.add(this.visual);
-        sumas.add(this.auditivo);
-        sumas.add(this.kinestesico);
+        sumas.add(visual);
+        sumas.add(auditivo);
+        sumas.add(kinestesico);
 
         return sumas;
     }
@@ -49,6 +46,7 @@ public class Aprendizaje implements Resultado {
     public List<Integer[]> procesarRespuestas(String respuestas) {
         Gson gson = new Gson();
         Object json = gson.fromJson(respuestas, JsonObject.class);
+        this.respuestas.clear();
 
         JsonArray visual = ((JsonObject) json).get("visual").getAsJsonArray();
         JsonArray auditivo = ((JsonObject) json).get("auditivo").getAsJsonArray();
@@ -80,8 +78,8 @@ public class Aprendizaje implements Resultado {
     public static void main(String[] args) {
         Aprendizaje aprendizaje = new Aprendizaje();
         String jsonTest = "{\n" +
-                "    \"visual\" : [0, 0, 0],\n" +
-                "    \"auditivo\" : [1, 2, 9],\n" +
+                "    \"visual\" : [0, 0, 10],\n" +
+                "    \"auditivo\" : [1, 2, 0],\n" +
                 "    \"kinestesico\" : [1, 2, 3]\n" +
                 "}";
 
