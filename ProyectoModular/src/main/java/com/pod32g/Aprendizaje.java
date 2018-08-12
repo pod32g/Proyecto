@@ -12,6 +12,13 @@ public class Aprendizaje implements Resultado {
 
     private List<Integer[]> respuestas = new LinkedList<Integer[]>();
 
+    public void guardarResultados(String codigo, String resultado) {
+        MySQLDB mySQLDB = new MySQLDB();
+        mySQLDB.runInsertQuery(String.format("INSERT INTO Cuestionario(codigo, resultado) VALUES ('%s', '%s')",
+                codigo, resultado));
+        mySQLDB.close();
+    }
+
     public int analizarRespuestas(List<Integer> respuestas) {
         return respuestas.indexOf(Collections.max(respuestas));
     }
