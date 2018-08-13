@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class MySQLDB implements Database {
 
-    private final String DB_URL = "jdbc:mysql://localhost/feedback?user=root&password=";
+    private final String DB_URL = "jdbc:mysql://localhost/modular?user=root&password=";
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
 

@@ -28,5 +28,6 @@ function sendAnswers(){
 		}
 		$.post("http://localhost:4567/Cuestionario/Procesar", JSON.stringify(respuestasJSON), function(data){
 			cuestionarioViewModel.tipo(data);
+			window.location.replace("http://localhost/view/gracias.html")
 		});
 	}
