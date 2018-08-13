@@ -29,6 +29,13 @@ public class Aprendizaje implements Resultado {
         List<Integer> tipos = sumarRespuestas(respuestas);
         return tipos.indexOf(Collections.max(tipos));
     }
+      
+    public void guardarResultados(String codigo, String resultado) {
+        MySQLDB mySQLDB = new MySQLDB();
+        mySQLDB.runInsertQuery(String.format("INSERT INTO Cuestionario(codigo, resultado) VALUES ('%s', '%s')",
+                codigo, resultado));
+        mySQLDB.close();
+    }
 
     public List<Integer> sumarRespuestas(List<Integer[]> respuestas) {
         int visual = 0, auditivo = 0, kinestesico = 0;
