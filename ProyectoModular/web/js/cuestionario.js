@@ -13,7 +13,8 @@ function sendAnswers(){
 		var respuestasJSON = {
 			visual : [],
 			auditivo : [],
-			kinestesico : []
+			kinestesico : [],
+			codigo : cuestionarioViewModel.codigo()
 		};
 		var respuestas = $("input:checked");
 		for (var i = 0; i < respuestas.length; i++) {
