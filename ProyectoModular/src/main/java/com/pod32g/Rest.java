@@ -1,6 +1,8 @@
 package com.pod32g;
 
 import static spark.Spark.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class Rest {
 
@@ -13,9 +15,16 @@ public class Rest {
             return cuestionarioAprendizaje.generarCuestionario();
         });
         post("/Cuestionario/Procesar","application/json", (request, response) -> {
-            return aprendizaje.obtenerTipoAprendizaje(aprendizaje.analizarRespuestas(request.body()));
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(request.body(), JsonObject.class);
+            String codigo = jsonObject.get("codigo").getAsString();
+            String tipo = aprendizaje.obtenerTipoAprendizaje(aprendizaje.analizarRespuestas(request.body()));
+            aprendizaje.guardarResultados(codigo, tipo);
+            return tipo;
         });
     }
+
+
 
     public static void main(String[] args) {
         Rest rest = new Rest();

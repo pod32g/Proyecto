@@ -9,6 +9,7 @@
 </head>
 <body>
 	<form action="javascript:sendAnswers()">
+		<p>Codigo: <input type="text" data-bind="textInput: codigo"></p>
 		<div data-bind="foreach: preguntas">
 			<p data-bind="text: $data"></p>
 			<input type="radio" data-bind="attr: {name: 'respuesta' + $index()}" value="1">Nunca</input>
