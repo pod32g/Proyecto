@@ -12,8 +12,8 @@ public class Rest {
             response.type("application/json");
             return cuestionarioAprendizaje.generarCuestionario();
         });
-        post("/Cuestionario/Procesar", (request, response) -> {
-            return aprendizaje.analizarRespuestas(aprendizaje.sumarRespuestas(aprendizaje.procesarRespuestas(request.body())));
+        post("/Cuestionario/Procesar","application/json", (request, response) -> {
+            return aprendizaje.obtenerTipoAprendizaje(aprendizaje.analizarRespuestas(request.body()));
         });
     }
 

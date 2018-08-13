@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class CuestionarioAprendizaje implements Cuestionarios {
@@ -16,7 +17,8 @@ public class CuestionarioAprendizaje implements Cuestionarios {
     public String generarCuestionario() throws FileNotFoundException {
         Gson gson = new Gson();
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        BufferedReader reader = new BufferedReader(new FileReader(classLoader.getResource("static/preguntas.json").getFile()));
+        BufferedReader reader = 
+            new BufferedReader(new InputStreamReader(classLoader.getResourceAsStream("static/preguntas.json")));
         Object json = gson.fromJson(reader, JsonObject.class);
         Map<String, List> jsonMap  = new HashMap<String, List>();
 

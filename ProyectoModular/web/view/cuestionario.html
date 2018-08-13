@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cuestionario</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+	<script type="text/javascript" src="../js/cuestionarioViewModel.js"></script>
+	<script type="text/javascript" src="../js/cuestionario.js"></script>
+</head>
+<body>
+	<form action="javascript:sendAnswers()">
+		<div data-bind="foreach: preguntas">
+			<p data-bind="text: $data"></p>
+			<input type="radio" data-bind="attr: {name: 'respuesta' + $index()}" value="1">Nunca</input>
+			<input type="radio" data-bind="attr: {name: 'respuesta' + $index()}" value="2">Raramente</input>
+			<input type="radio" data-bind="attr: {name: 'respuesta' + $index()}" value="3">Ocasionalmente</input>
+			<input type="radio" data-bind="attr: {name: 'respuesta' + $index()}" value="4">Usualmente</input>
+			<input type="radio" data-bind="attr: {name: 'respuesta' + $index()}" value="5">Siempre</input>
+		</div>
+		<br>
+		<input type="submit">
+	</form>
+	<h1 data-bind="text: tipo"></h1>
+</body>
+</html>

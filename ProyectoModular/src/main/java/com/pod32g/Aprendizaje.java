@@ -12,15 +12,29 @@ public class Aprendizaje implements Resultado {
 
     private List<Integer[]> respuestas = new LinkedList<Integer[]>();
 
+    public String obtenerTipoAprendizaje(int tipo){
+        switch(tipo){
+            case 0:
+                return "Visual";
+            case 1:
+                return "Auditivo";
+            case 2:
+                return "Kinestesico";
+        }
+        return null;
+    }
+
+    public int analizarRespuestas(String respuestasJSON) {
+        List<Integer[]> respuestas = procesarRespuestas(respuestasJSON);
+        List<Integer> tipos = sumarRespuestas(respuestas);
+        return tipos.indexOf(Collections.max(tipos));
+    }
+      
     public void guardarResultados(String codigo, String resultado) {
         MySQLDB mySQLDB = new MySQLDB();
         mySQLDB.runInsertQuery(String.format("INSERT INTO Cuestionario(codigo, resultado) VALUES ('%s', '%s')",
                 codigo, resultado));
         mySQLDB.close();
-    }
-
-    public int analizarRespuestas(List<Integer> respuestas) {
-        return respuestas.indexOf(Collections.max(respuestas));
     }
 
     public List<Integer> sumarRespuestas(List<Integer[]> respuestas) {
@@ -52,12 +66,12 @@ public class Aprendizaje implements Resultado {
 
     public List<Integer[]> procesarRespuestas(String respuestas) {
         Gson gson = new Gson();
-        Object json = gson.fromJson(respuestas, JsonObject.class);
+        JsonObject json = gson.fromJson(respuestas, JsonObject.class);
         this.respuestas.clear();
 
-        JsonArray visual = ((JsonObject) json).get("visual").getAsJsonArray();
-        JsonArray auditivo = ((JsonObject) json).get("auditivo").getAsJsonArray();
-        JsonArray kinestesico = ((JsonObject) json).get("kinestesico").getAsJsonArray();
+        JsonArray visual = json.get("visual").getAsJsonArray();
+        JsonArray auditivo = json.get("auditivo").getAsJsonArray();
+        JsonArray kinestesico = json.get("kinestesico").getAsJsonArray();
 
         Integer[] visualAns = new Integer[visual.size()];
         Integer[] auditivoAns = new Integer[auditivo.size()];
@@ -90,7 +104,7 @@ public class Aprendizaje implements Resultado {
                 "    \"kinestesico\" : [1, 2, 3]\n" +
                 "}";
 
-        System.out.println(aprendizaje.analizarRespuestas(aprendizaje.sumarRespuestas(aprendizaje.procesarRespuestas(jsonTest))));
+        System.out.println(aprendizaje.analizarRespuestas(jsonTest));
     }
 
 }
